@@ -4,10 +4,8 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
-import ImageIcon from "@material-ui/icons/Image";
 import Divider from "@material-ui/core/Divider";
-
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import { styles } from "./styles";
 
@@ -19,11 +17,12 @@ const Sidebar = ({ data }) => {
             {data &&
                 data.map((user) => (
                     <>
-                        <ListItem>
+                        <ListItem key={user.name}>
                             <ListItemAvatar>
-                                <Avatar>
-                                    <ImageIcon />
-                                </Avatar>
+                                <AccountCircleIcon
+                                    color="primary"
+                                    fontSize="large"
+                                />
                             </ListItemAvatar>
                             <ListItemText primary={`${user.name}`} />
                         </ListItem>

@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const Auth = require("./router/auth");
-const { users } = require("./controllers/user")
+const { users, getMe, updateLastSeen, login } = require("./controllers/user");
+
 const {
     indexDialog,
     createDialog,
@@ -13,16 +14,16 @@ const {
 } = require("./controllers/dialog");
 
 const {
-  updateReadStatus,
-  deleteMessage,
-  createMessage,
-  indexMessage,
+    updateReadStatus,
+    deleteMessage,
+    createMessage,
+    indexMessage,
 } = require("./controllers/messages");
 
 const app = express();
 const server = http.createServer(app);
 
-const PORT = 8000 || process.env.PORT;
+const PORT = 8080 || process.env.PORT;
 
 const io = require("socket.io")(server, {
     handlePreflightRequest: (req, res) => {
@@ -53,6 +54,7 @@ mongoose
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true,
+        useFindAndModify: false,
     })
     .then(
         () => {
@@ -64,9 +66,22 @@ mongoose
 app.use(express.json());
 app.use(cors());
 
-app.post("/signUp", Auth);
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+});
 
-app.get('/users', users);
+app.use(updateLastSeen);
+
+app.post("/signUp", Auth);
+app.post("/login", login);
+
+app.get("/users", users);
+app.get("/user/me", getMe);
 
 app.get("/dialogs", indexDialog);
 app.delete("/dialogs/:id", deleteDialog);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import SignUpForm from "./components/form/SignUpForm";
+import SignInForm from "./components/form/SignInForm";
 
 import Main from "./pages/main/Main";
 
@@ -14,20 +15,29 @@ const App = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const result = await instance.get(`/users`);
-            setData(result);
-        };
+        if (user) {
+            const fetchData = async () => {
+                const result = await instance.get(`/users`);
+                setData(result);
+            };
 
-        fetchData();
+            fetchData();
+        }
     }, []);
-console.log(data)
+    console.log(data);
     return (
         <>
             <NavBar user={user} />
             <Router>
                 {user ? (
-                    <Route exact path='/' render={() => <Main data={data} />} />
+                    <>
+                        <Route
+                            exact
+                            path="/"
+                            render={() => <Main data={data} />}
+                        />
+                        <Route path="/login" component={SignInForm} />{" "}
+                    </>
                 ) : (
                     <Route path="/auth" component={SignUpForm} />
                 )}

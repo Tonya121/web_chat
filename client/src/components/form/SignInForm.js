@@ -7,17 +7,15 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-
 import instance from "../../utils/api";
 
 import { styles } from "./styles";
 
-export default function SignUpForm() {
+export default function SignInForm() {
     let history = useHistory();
 
     const classes = styles();
     const [state, setState] = useState({
-        name: "",
         email: "",
         password: "",
     });
@@ -25,7 +23,7 @@ export default function SignUpForm() {
     const handleSubmit = (evt) => {
         evt.preventDefault();
         instance
-            .post(`/signUp`, state, {
+            .post(`/login`, state, {
                 headers: {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*",
@@ -35,9 +33,8 @@ export default function SignUpForm() {
             })
             .then((user) => {
                 if (user) {
-                    localStorage.setItem("user", state.email);
-                    localStorage.setItem("name", state.name);
-                    history.push("/login");
+                    console.log(user)
+                    history.push("/");
                 }
             });
     };
@@ -55,7 +52,7 @@ export default function SignUpForm() {
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Sign In
                 </Typography>
                 <form
                     onSubmit={handleSubmit}
@@ -63,20 +60,6 @@ export default function SignUpForm() {
                     noValidate
                 >
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                autoComplete="fname"
-                                name="name"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="name"
-                                label="Name"
-                                autoFocus
-                                value={state.name}
-                                onChange={handleChange}
-                            />
-                        </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
@@ -112,7 +95,7 @@ export default function SignUpForm() {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign Up
+                        Sign In
                     </Button>
                 </form>
             </div>

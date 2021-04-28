@@ -18,7 +18,7 @@ async function createUser(payload) {
                 });
                 newUser.save();
             });
-        });
+        })
 }
 
 module.exports = createUser;

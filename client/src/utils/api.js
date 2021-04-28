@@ -1,8 +1,10 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: "http://localhost:8000/",
+    baseURL: "http://localhost:8080/",
 });
+
+instance.defaults.headers.common['Authorization'] = localStorage.getItem("token")
 
 instance.interceptors.response.use(
     (response) => {

@@ -1,7 +1,7 @@
 const express = require("express");
 
-const { Dialog } = require("../models/dialog");
-const { Message } = require("../models/message");
+const Dialog = require("../models/dialog");
+const Message = require("../models/message");
 
 const updateReadStatus = (res, userId, dialogId) => {
     Message.updateMany(
@@ -27,10 +27,10 @@ const indexMessage = (req, res) => {
     const dialogId = req.query.dialog;
     const userId = req.user._id;
 
-    this.updateReadStatus(res, userId, dialogId);
+    updateReadStatus(res, userId, dialogId);
 
     Message.find({ dialog: dialogId })
-        .populate(["dialog", "user", "attachments"])
+        .populate(["dialog", "user"])
         .exec(function (err, messages) {
             if (err) {
                 return res.status(404).json({
@@ -43,31 +43,31 @@ const indexMessage = (req, res) => {
 };
 
 const createMessage = (req, res) => {
-    const userId = req.user._id;
-
+    const userId = req.body._id;
+    console.log(req.session)
     const postData = {
         text: req.body.text,
         dialog: req.body.dialog_id,
-        attachments: req.body.attachments,
         user: userId,
     };
 
     const message = new Message(postData);
 
-    this.updateReadStatus(res, userId, req.body.dialog_id);
+    updateReadStatus(res, userId, req.body.dialog_id);
 
     message
         .save()
         .then((obj) => {
-            obj.populate("dialog user attachments", (err, message) => {
+            obj.populate("dialog user", (err, message) => {
                 if (err) {
+                    console.log(err)
                     return res.status(500).json({
                         status: "error",
                         message: err,
                     });
                 }
 
-                DialogModel.findOneAndUpdate(
+                Dialog.findOneAndUpdate(
                     { _id: postData.dialog },
                     { lastMessage: message._id },
                     { upsert: true },

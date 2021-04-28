@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import Avatar from "@material-ui/core/Avatar";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import DoneIcon from "@material-ui/icons/Done";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import OwnMessage from "../message/OwnMessage";
 import Message from "../message/Message";
@@ -20,13 +21,7 @@ const Chat = ({ ownUser }) => {
             <div className={classes.wrap}>
                 <div className={classes.messageLeft}>
                     <div className={classes.messageSection}>
-                        <Avatar
-                            alt="Remy Sharp"
-                            src="/broken-image.jpg"
-                            className={classes.orange}
-                        >
-                            B
-                        </Avatar>
+                        <AccountCircleIcon color="primary" fontSize="large" />
                         <OwnMessage />
                         <DoneIcon />
                     </div>
@@ -34,13 +29,7 @@ const Chat = ({ ownUser }) => {
 
                 <div className={classes.messageRight}>
                     <div className={classes.messageSection}>
-                        <Avatar
-                            alt="Remy Sharp"
-                            src="/broken-image.jpg"
-                            className={classes.orange}
-                        >
-                            X
-                        </Avatar>
+                        <AccountCircleIcon color="primary" fontSize="large" />
                         <Message />
                         <DoneAllIcon />
                     </div>

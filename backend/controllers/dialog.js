@@ -25,6 +25,7 @@ const indexDialog = (req, res) => {
 };
 
 const createDialog = (req, res) => {
+    console.log(req.user._id, "req.user._id")
     const postData = {
         author: req.user._id,
         partner: req.body.partner,
