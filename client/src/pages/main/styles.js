@@ -14,7 +14,11 @@ export const styles = makeStyles((theme) => ({
         width: "80%",
         display: "flex",
         flexDirection: "column",
+        paddingTop: 10,
         justifyContent: "space-between",
-        paddingTop: 10
+    },
+    wrap: {
+        display: "flex",
+        flexDirection: "column",
     },
 }));

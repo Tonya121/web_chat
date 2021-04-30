@@ -25,9 +25,9 @@ const updateReadStatus = (res, userId, dialogId) => {
 
 const indexMessage = (req, res) => {
     const dialogId = req.query.dialog;
-    const userId = req.user._id;
+    // const userId = req.body.dialog_id;
 
-    updateReadStatus(res, userId, dialogId);
+    // updateReadStatus(res, userId, dialogId);
 
     Message.find({ dialog: dialogId })
         .populate(["dialog", "user"])
@@ -43,8 +43,8 @@ const indexMessage = (req, res) => {
 };
 
 const createMessage = (req, res) => {
-    const userId = req.body._id;
-    console.log(req.session)
+    const userId = req.body.author;
+    
     const postData = {
         text: req.body.text,
         dialog: req.body.dialog_id,

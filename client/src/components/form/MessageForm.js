@@ -6,12 +6,19 @@ import TextField from "@material-ui/core/TextField";
 
 import { styles } from "./styles";
 
-const MessageForm = () => {
+const MessageForm = ({ submitMessage, handleChange, state }) => {
     const classes = styles();
+   
     return (
-        <form className={classes.formMessage}>
-            <TextField fullWidth label="Write message" />
-            <IconButton color="primary" aria-label="message">
+        <form onSubmit={submitMessage} className={classes.formMessage}>
+            <TextField
+                fullWidth
+                label="Write message"
+                value={state}
+                name="text"
+                onChange={handleChange}
+            />
+            <IconButton type="submit" color="primary" aria-label="message">
                 <AddCircleIcon />
             </IconButton>
         </form>

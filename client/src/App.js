@@ -23,8 +23,8 @@ const App = () => {
 
             fetchData();
         }
-    }, []);
-    console.log(data);
+    }, [user]);
+   
     return (
         <>
             <NavBar user={user} />
@@ -36,7 +36,8 @@ const App = () => {
                             path="/"
                             render={() => <Main data={data} />}
                         />
-                        <Route path="/login" component={SignInForm} />{" "}
+                        <Route path="/login" component={SignInForm} />
+                        <Route path="/dialog/:id" render={() => <Main data={data} />} />
                     </>
                 ) : (
                     <Route path="/auth" component={SignUpForm} />

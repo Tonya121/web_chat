@@ -5,14 +5,21 @@ import Typography from "@material-ui/core/Typography";
 
 import { styles } from "./styles";
 
-const Message = () => {
+const Message = ({ message, author }) => {
+    
     const classes = styles();
+   
     return (
-        <Paper className={classes.paper}>
+        <div>
+            <Paper className={classes.paper}>
+                <Typography variant="body2" component="p">
+                    {message}
+                </Typography>
+            </Paper>
             <Typography variant="body2" component="p">
-                some message answer
+                {author}
             </Typography>
-        </Paper>
+        </div>
     );
 };
 

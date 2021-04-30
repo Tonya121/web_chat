@@ -9,15 +9,16 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import { styles } from "./styles";
 
-const Sidebar = ({ data }) => {
+const Sidebar = ({ data, openDialog }) => {
+    
     const classes = styles();
-
+    
     return (
         <List className={classes.root}>
             {data &&
                 data.map((user) => (
-                    <>
-                        <ListItem key={user.name}>
+                    <div key={user._id}>
+                        <ListItem onClick={() => openDialog(user)}>
                             <ListItemAvatar>
                                 <AccountCircleIcon
                                     color="primary"
@@ -27,7 +28,7 @@ const Sidebar = ({ data }) => {
                             <ListItemText primary={`${user.name}`} />
                         </ListItem>
                         <Divider />
-                    </>
+                    </div>
                 ))}
         </List>
     );

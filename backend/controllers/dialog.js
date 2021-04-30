@@ -25,15 +25,15 @@ const indexDialog = (req, res) => {
 };
 
 const createDialog = (req, res) => {
-    console.log(req.user._id, "req.user._id")
+    console.log(req.body.author, "req.user._id")
     const postData = {
-        author: req.user._id,
+        author: req.body.author,
         partner: req.body.partner,
     };
 
     Dialog.findOne(
         {
-            author: req.user._id,
+            author: req.body.author,
             partner: req.body.partner,
         },
         (err, dialog) => {
@@ -46,7 +46,7 @@ const createDialog = (req, res) => {
             if (dialog) {
                 return res.status(403).json({
                     status: "error",
-                    message: "Такой диалог уже есть",
+                    message: "Such a dialogue already exists",
                 });
             } else {
                 const dialog = new Dialog(postData);
@@ -56,7 +56,7 @@ const createDialog = (req, res) => {
                     .then((dialogObj) => {
                         const message = new Message({
                             text: req.body.text,
-                            user: req.user._id,
+                            user: req.body.author,
                             dialog: dialogObj._id,
                         });
 
@@ -66,7 +66,7 @@ const createDialog = (req, res) => {
                                 dialogObj.lastMessage = message._id;
                                 dialogObj.save().then(() => {
                                     res.json(dialogObj);
-                                    this.io.emit("SERVER:DIALOG_CREATED", {
+                                    io.emit("SERVER:DIALOG_CREATED", {
                                         ...postData,
                                         dialog: dialogObj,
                                     });

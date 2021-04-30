@@ -5,14 +5,19 @@ import Typography from "@material-ui/core/Typography";
 
 import { styles } from "./styles";
 
-const OwnMessage = () => {
+const OwnMessage = ({ message, author }) => {
     const classes = styles();
     return (
-        <Paper className={classes.message}>
+        <div>
+            <Paper className={classes.message}>
+                <Typography variant="body2" component="p">
+                    {message}
+                </Typography>
+            </Paper>
             <Typography variant="body2" component="p">
-                some message
+                {author}
             </Typography>
-        </Paper>
+        </div>
     );
 };
 

@@ -33,6 +33,7 @@ export default function SignInForm() {
             })
             .then((user) => {
                 if (user) {
+                    localStorage.setItem("token", user.token);
                     console.log(user)
                     history.push("/");
                 }

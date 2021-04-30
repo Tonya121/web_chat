@@ -5,10 +5,6 @@ export const styles = makeStyles((theme) => ({
         backgroundColor: theme.palette.info.main,
         margin: "0 10px",
     },
-    wrap: {
-        display: "flex",
-        flexDirection: "column",
-    },
     messageSection: {
         display: "flex",
         justifyContent: "space-between",
@@ -29,5 +25,5 @@ export const styles = makeStyles((theme) => ({
         justifyContent: "space-between",
         padding: "20px",
         borderTop: "2px solid #bdbdbd",
-    }
+    },
 }));
